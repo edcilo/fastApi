@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Request
 
 
 router = APIRouter(
@@ -8,5 +8,8 @@ router = APIRouter(
 
 
 @router.get("/")
-def about_route():
-    return {"message": "About page"}
+def about_route(request: Request):
+    return {
+        "name": request.app.title,
+        "version": request.app.version,
+    }
