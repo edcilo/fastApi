@@ -1,11 +1,13 @@
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
-from sqlalchemy.orm import relationship
-from ..db import db
+import sqlalchemy as sa
+from .model import Model
 
 
-class User(db.base):
+class User(Model):
     __tablename__ = "users"
 
-    id = Column(Integer, primary_key=True, index=True)
-    email = Column(String, unique=True, index=True)
-    is_active = Column(Boolean, default=True)
+    _fillable = ("email", "password",)
+
+    id = sa.Column(sa.Integer, primary_key=True, index=True)
+    email = sa.Column(sa.String, unique=True, index=True)
+    password = sa.Column(sa.String)
+    is_active = sa.Column(sa.Boolean, default=True)
