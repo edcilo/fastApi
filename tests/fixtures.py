@@ -5,8 +5,10 @@ from app.main import new_app
 
 settings = {
     "app": {
-        "name": "Test App",
-        "version": "0.0.1",
+        "app": {
+            "name": "Test App",
+            "version": "1.0.0",
+        }
     }
 }
 
