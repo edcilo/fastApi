@@ -7,6 +7,8 @@ ENV APP_VERSION=1.0.0
 
 RUN apk update \
     && apk add --no-cache \
+        build-base \
+        postgresql-dev \
         python3-dev
 
 WORKDIR /code

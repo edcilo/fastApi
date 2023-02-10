@@ -13,10 +13,7 @@ class Engine(ABC):
         pass
 
     def engine(self):
-        return create_engine(
-            self.url,
-            connect_args={"check_same_thread": False}
-        )
+        return create_engine(self.url)
 
     def session(self):
         return sessionmaker(

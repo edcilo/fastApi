@@ -9,6 +9,8 @@ def engineFactory():
 
     if engineName == 'sqlite':
         from .sqlite import SQLite as engine
+    elif engineName == 'psql':
+        from .psql import PSQL as engine
     else:
         raise Exception('Unknown engine: %s' % engineName)
 

@@ -9,3 +9,9 @@ class SQLite(Engine):
     @property
     def url(self):
         return f'sqlite:///{self.location}'
+
+    def engine(self):
+        return create_engine(
+            self.url,
+            connect_args={"check_same_thread": False}
+        )
