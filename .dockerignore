@@ -1,0 +1,7 @@
+*
+!app
+!tests
+!entrypoint.sh
+!requirements.txt
+!setup.py
+!setup.cfg
