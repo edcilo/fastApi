@@ -1,22 +1,14 @@
-from fastapi import APIRouter, Depends, Request
+from fastapi import APIRouter, Depends
 from ..schemas import UserCreateSchema
-from ..repositories import UserRepository
-from ..models import db
+from ..controllers import UserController
 
 
-router = APIRouter(
-    prefix="/api/v1/users",
-)
+router = APIRouter(prefix="/api/v1/users")
 
 
 @router.post("/")
 def create_user_route(
     user: UserCreateSchema,
-    userRepo = Depends(UserRepository)
+    userController = Depends(UserController),
 ):
-    db_user = userRepo.create(user.dict())
-    return {
-        "id": db_user.id,
-        "name": db_user.email,
-        "version": db_user.password,
-    }
+    return userController.create(user)
