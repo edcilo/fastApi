@@ -9,6 +9,7 @@ RUN apk update \
     && apk add --no-cache \
         build-base \
         postgresql-dev \
+        mysql-dev \
         python3-dev
 
 WORKDIR /code

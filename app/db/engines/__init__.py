@@ -6,11 +6,12 @@ def engineFactory():
     engineName = db_settings.default
     engines_settings = db_settings.connections.dict()
     settings = engines_settings.get(engineName)
-
     if engineName == 'sqlite':
         from .sqlite import SQLite as engine
     elif engineName == 'psql':
         from .psql import PSQL as engine
+    elif engineName == 'mysql':
+        from .mysql import MySQL as engine
     else:
         raise Exception('Unknown engine: %s' % engineName)
 

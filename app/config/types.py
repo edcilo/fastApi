@@ -73,9 +73,18 @@ class SQLSchema(BaseModel):
     password: str
 
 
+class MySQLSchema(BaseModel):
+    host: str
+    port: int
+    database: str
+    username: str
+    password: str
+
+
 class EnginesSchema(BaseModel):
     sqlite: SqliteSchema
     psql: SQLSchema
+    mysql: MySQLSchema
 
 
 class DBSchema(BaseModel):
