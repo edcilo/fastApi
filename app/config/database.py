@@ -1,6 +1,6 @@
 import os
-from .types import TDbConfig
 
+from .types import TDbConfig
 
 db_config: TDbConfig = {
     'default': os.getenv("DB_CONNECTION", "sqlite"),
