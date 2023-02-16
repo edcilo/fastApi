@@ -1,9 +1,12 @@
 import datetime
+
 import sqlalchemy as sa
-from ..db import db
+from sqlalchemy.ext.declarative import declarative_base
+
+Base = declarative_base()
 
 
-class Model(db.base):
+class Model(Base):
     __abstract__ = True
 
     _fillable = tuple()

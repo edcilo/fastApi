@@ -1,5 +1,4 @@
 from ..models import User
-from ..schemas import UserCreateSchema
 from .repository import Repository
 
 

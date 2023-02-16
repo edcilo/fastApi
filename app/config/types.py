@@ -1,5 +1,6 @@
 from typing import List, TypedDict
-from pydantic import BaseSettings, BaseModel
+
+from pydantic import BaseModel, BaseSettings
 
 
 class TApp(TypedDict):
@@ -32,7 +33,7 @@ class TSqlConfig(TypedDict):
 
 class TConnectionsConfig(TypedDict):
     sqlite: TSqLiteConfig
-    psql: TSqlConfig
+    postgres: TSqlConfig
 
 
 class TDbConfig(TypedDict):
@@ -83,7 +84,7 @@ class MySQLSchema(BaseModel):
 
 class EnginesSchema(BaseModel):
     sqlite: SqliteSchema
-    psql: SQLSchema
+    postgres: SQLSchema
     mysql: MySQLSchema
 
 

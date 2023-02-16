@@ -10,7 +10,7 @@ db_config: TDbConfig = {
             'location': os.getenv("DB_PATH", "sqlite.db"),
         },
 
-        'psql': {
+        'postgres': {
             "host": os.getenv('DB_HOST', 'localhost'),
             "port": os.getenv('DB_PORT', 5432),
             "database": os.getenv('DB_DATABASE', 'postgres'),

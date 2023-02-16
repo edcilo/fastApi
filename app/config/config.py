@@ -26,17 +26,20 @@ def get_settings_override(settings: TConfig):
     return SettingsSchema(**settings)
 
 
-def setup_app(settings: TConfig) -> FastAPI:
+def setup_app(settings) -> FastAPI:
     settings = merge({'app': app_config, 'db': db_config}, settings)
+
     setup_log_config(settings.get('app'))
     app = setup_app_config(settings.get('app').get('app', {}))
     setup_cors_config(app, settings.get('app').get('cors', {}))
+
     app.dependency_overrides[get_settings] = get_settings_override(settings)
+
     logging.info(msg='App initialized')
     return app
 
 
-def setup_log_config(settings: TApp):
+def setup_log_config(settings):
     log_level = settings.get('log_level', 'INFO')
     logging.basicConfig(
         level=logging.getLevelName(level=log_level),
@@ -46,7 +49,7 @@ def setup_log_config(settings: TApp):
     logging.info('Logging configured')
 
 
-def setup_app_config(settings: TApp) -> FastAPI:
+def setup_app_config(settings) -> FastAPI:
     app = FastAPI(
         title=settings.get('name', 'FastAPI'),
         version=settings.get('version', '1.0.0'),
@@ -55,7 +58,7 @@ def setup_app_config(settings: TApp) -> FastAPI:
     return app
 
 
-def setup_cors_config(app: FastAPI, settings: TCors):
+def setup_cors_config(app: FastAPI, settings):
     app.add_middleware(
         CORSMiddleware,
         allow_origins=settings.get('origins', ['*']),

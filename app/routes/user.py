@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
-from ..schemas import UserCreateSchema
-from ..controllers import UserController
 
+from ..controllers import UserController
+from ..schemas import UserCreateSchema
 
 router = APIRouter(prefix="/api/v1/users")
 
@@ -9,6 +9,6 @@ router = APIRouter(prefix="/api/v1/users")
 @router.post("/")
 def create_user_route(
     user: UserCreateSchema,
-    userController = Depends(UserController),
+    userController=Depends(UserController),
 ):
     return userController.create(user)

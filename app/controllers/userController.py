@@ -6,9 +6,4 @@ class UserController:
         self.userRepo = UserRepository()
 
     def create(self, user):
-        user = self.userRepo.create(user.dict())
-        return {
-            "id": user.id,
-            "email": user.email,
-            "password": user.password,
-        }
+        return self.userRepo.create(user.dict())

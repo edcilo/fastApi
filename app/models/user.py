@@ -1,4 +1,5 @@
 import sqlalchemy as sa
+
 from .model import Model
 
 
