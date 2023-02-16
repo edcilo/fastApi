@@ -1,3 +1,5 @@
+from fastapi import HTTPException
+
 from ..repositories import UserRepository
 
 
@@ -12,7 +14,10 @@ class UserController:
         return self.userRepo.create(user.dict())
 
     def detail(self, id):
-        return self.userRepo.detail(id)
+        user = self.userRepo.detail(id)
+        if user is None:
+            raise HTTPException(status_code=404, detail="User not found")
+        return user
 
     def update(self, id, user):
         return self.userRepo.update(id, user.dict())
