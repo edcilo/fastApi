@@ -1,6 +1,8 @@
 from abc import ABC, abstractproperty
 from typing import Union
 
+from pydantic import BaseModel as PydanticModel
+
 from ..db import db
 from ..models import Model
 
@@ -49,7 +51,7 @@ class Repository(ABC):
             }
         }
 
-    def create(self, data: dict) -> Model:
+    def create(self, data: Union[dict, PydanticModel]) -> Model:
         model = self.model(data)
         return self.db.commit(model)
 
@@ -58,7 +60,7 @@ class Repository(ABC):
             return id
         return self.query.filter_by(id=id).first()
 
-    def update(self, id: Union[int, Model], data: dict) -> Model:
+    def update(self, id: Union[int, Model], data: Union[dict, PydanticModel]) -> Model:
         model = self.get_by_id(id)
         model.update(data)
         return self.db.commit(model)
