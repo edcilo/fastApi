@@ -4,7 +4,9 @@ from typing import List, Union
 
 from pydantic import BaseModel, Field
 
-from .commonSchema import PaginationMetadataSchema, PaginationParamsSchema
+from .commonSchema import (
+    ListAllParamsSchema, PaginationMetadataSchema, PaginationParamsSchema
+)
 
 
 class UserBaseSchema(BaseModel):
@@ -43,4 +45,8 @@ class PaginationOrderColumnParam(str, Enum):
 
 
 class UserPaginationParamsSchema(PaginationParamsSchema):
+    order_column: PaginationOrderColumnParam = Field(default="created_at")
+
+
+class UserListAllParamsSchema(ListAllParamsSchema):
     order_column: PaginationOrderColumnParam = Field(default="created_at")

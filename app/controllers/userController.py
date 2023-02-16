@@ -1,35 +1,33 @@
 from fastapi import HTTPException, status
 
+from ..decorators import getEntity, validator
 from ..repositories import UserRepository
-from ..schemas import UserPaginationParamsSchema
+from ..schemas import UserListAllParamsSchema, UserPaginationParamsSchema
 
 
 class UserController:
     def __init__(self):
         self.userRepo = UserRepository()
 
-    def all(self):
-        return self.userRepo.all()
+    @validator(UserListAllParamsSchema)
+    def all(self, params):
+        return self.userRepo.all(**params.dict())
 
+    @validator(UserPaginationParamsSchema)
     def paginate(self, params):
-        try:
-            params = UserPaginationParamsSchema(**params)
-            return self.userRepo.paginate(**params.dict())
-        except Exception as e:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST, detail=e.errors())
+        return self.userRepo.paginate(**params.dict())
 
-    def create(self, user):
-        return self.userRepo.create(user.dict())
+    def create(self, params):
+        return self.userRepo.create(params.dict())
 
-    def detail(self, id):
-        user = self.userRepo.detail(id)
-        if user is None:
-            raise HTTPException(status_code=404, detail="User not found")
+    @getEntity(UserRepository)
+    def detail(self, user):
         return user
 
-    def update(self, id, user):
-        return self.userRepo.update(id, user.dict())
+    @getEntity(UserRepository)
+    def update(self, user, params):
+        return self.userRepo.update(user, params.dict())
 
-    def delete(self, id):
-        return self.userRepo.delete(id)
+    @getEntity(UserRepository)
+    def delete(self, user):
+        return self.userRepo.delete(user)

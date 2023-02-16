@@ -26,8 +26,13 @@ def get_paginated_users_route(
 
 @ router.get("/list", status_code=status.HTTP_200_OK)
 def get_all_users_route(
+        order_column: str = 'created_at',
+        order: str = 'desc',
         userController=Depends(UserController)) -> list[UserSchema]:
-    return userController.all()
+    return userController.all({
+        'order_column': order_column,
+        'order': order
+    })
 
 
 @ router.post("/", status_code=status.HTTP_201_CREATED)

@@ -53,17 +53,17 @@ class Repository(ABC):
         model = self.model(data)
         return self.db.commit(model)
 
-    def detail(self, id: Union[int, Model]) -> Model:
+    def get_by_id(self, id: Union[int, Model]) -> Model:
         if isinstance(id, Model):
             return id
         return self.query.filter_by(id=id).first()
 
     def update(self, id: Union[int, Model], data: dict) -> Model:
-        model = self.detail(id)
+        model = self.get_by_id(id)
         model.update(data)
         return self.db.commit(model)
 
     def delete(self, id: Union[int, Model]) -> Model:
-        model = self.detail(id)
+        model = self.get_by_id(id)
         self.db.delete(model)
         return model
