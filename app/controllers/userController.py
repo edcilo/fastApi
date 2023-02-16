@@ -1,4 +1,4 @@
-from fastapi import HTTPException, status
+from fastapi import HTTPException, Request, status
 
 from ..decorators import getEntity, validator
 from ..repositories import UserRepository
@@ -6,7 +6,8 @@ from ..schemas import UserListAllParamsSchema, UserPaginationParamsSchema
 
 
 class UserController:
-    def __init__(self):
+    def __init__(self, request: Request):
+        self.request = request
         self.userRepo = UserRepository()
 
     @validator(UserListAllParamsSchema)
