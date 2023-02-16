@@ -5,45 +5,39 @@ from sqlalchemy.orm import declarative_base, sessionmaker
 
 
 class Engine(metaclass=ABCMeta):
-    def __init__(self, host: str, port: int, username: str, password: str, database: str):
-        self.host = host
-        self.port = port
-        self.user = username
-        self.password = password
-        self.database = database
+    def __init__(self, conn):
+        self.conn = conn
+        self.dbUrl = self.url(conn)
+        self.session = self.session_maker()()
 
     def __repr__(self):
         return f'(host={self.host}, port={self.port}, database={self.database}))'
 
-    @abstractproperty
-    def url(self):
+    @abstractmethod
+    def url(self, conn):
         pass
 
     @property
     def engine(self):
-        return create_engine(
-            self.url
-        )
+        return create_engine(url=self.dbUrl)
 
-    @property
-    def session(self):
+    def session_maker(self):
         return sessionmaker(
             autocommit=False,
             autoflush=False,
             bind=self.engine)
 
-    def commit(self, model):
-        session = self.session()
+    def commit(self, model=None):
         try:
-            session.add(model)
-            session.commit()
-            session.refresh(model)
+            self.session.add(model)
+            self.session.commit()
+            self.session.refresh(model)
             return model
         except Exception as e:
-            session.rollback()
+            self.session.rollback()
             raise e
         finally:
-            session.close()
+            self.session.close()
 
     # def bulk_save(self, models):
     #     try:
@@ -56,13 +50,12 @@ class Engine(metaclass=ABCMeta):
     #         self.session.close()
 
     def delete(self, model):
-        session = self.session()
         try:
-            session.delete(model)
-            session.commit()
+            self.session.delete(model)
+            self.session.commit()
             return model
         except Exception as e:
-            session.rollback()
+            self.session.rollback()
             raise e
         finally:
-            session.close()
+            self.session.close()

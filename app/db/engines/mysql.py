@@ -2,6 +2,5 @@ from .engine import Engine
 
 
 class MySQL(Engine):
-    @property
-    def url(self):
-        return f'mysql://{self.user}:{self.password}@{self.host}:{self.port}/{self.database}'
+    def url(self, conn) -> str:
+        return f'mysql://{conn["user"]}:{conn["password"]}@{conn["host"]}:{conn["port"]}/{conn["database"]}'

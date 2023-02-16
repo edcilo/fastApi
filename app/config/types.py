@@ -27,7 +27,7 @@ class TSqlConfig(TypedDict):
     host: str
     port: int
     database: str
-    username: str
+    user: str
     password: str
 
 
@@ -70,7 +70,7 @@ class SQLSchema(BaseModel):
     host: str
     port: int
     database: str
-    username: str
+    user: str
     password: str
 
 
@@ -78,7 +78,7 @@ class MySQLSchema(BaseModel):
     host: str
     port: int
     database: str
-    username: str
+    user: str
     password: str
 
 
