@@ -1,6 +1,7 @@
-from fastapi import HTTPException
+from fastapi import HTTPException, status
 
 from ..repositories import UserRepository
+from ..schemas import UserPaginationParamsSchema
 
 
 class UserController:
@@ -9,6 +10,14 @@ class UserController:
 
     def all(self):
         return self.userRepo.all()
+
+    def paginate(self, params):
+        try:
+            params = UserPaginationParamsSchema(**params)
+            return self.userRepo.paginate(**params.dict())
+        except Exception as e:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST, detail=e.errors())
 
     def create(self, user):
         return self.userRepo.create(user.dict())
