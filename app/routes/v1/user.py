@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends, status
 
-from ..controllers import UserController
-from ..schemas import (
+from ...controllers import UserController
+from ...schemas import (
     UserCreateSchema, UserPaginationSchema, UserSchema, UserUpdateSchema
 )
-from ..schemas.commonSchema import PaginationParamsSchema
+from ...schemas.commonSchema import PaginationParamsSchema
 
 router = APIRouter(prefix="/api/v1/users")
 

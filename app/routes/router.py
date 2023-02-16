@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from . import about
-from . import user
+
+from .v1 import about, user
 
 
 def setup_routes(app: FastAPI):
