@@ -13,6 +13,6 @@ class SQLite(Engine):
     @property
     def engine(self):
         return create_engine(
-            url=self.url,
+            url=self.dbUrl,
             connect_args={"check_same_thread": False}
         )
